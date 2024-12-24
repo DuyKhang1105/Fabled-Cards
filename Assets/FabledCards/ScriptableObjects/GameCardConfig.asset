@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6473ceffb852b4ab2f2fe4771745da, type: 3}
+  m_Name: GameCardConfig
+  m_EditorClassIdentifier: 
+  commonCards:
+  - id: 1-1
+    cardName: A
+    rarity: 1
+  - id: 1-2
+    cardName: B
+    rarity: 2
+  - id: 1-3
+    cardName: C
+    rarity: 3
+  rareCards:
+  - id: 2-1
+    cardName: E
+    rarity: 4
+  - id: 2-2
+    cardName: Y
+    rarity: 5
+  - id: 2-3
+    cardName: Z
+    rarity: 6
+  epicCards:
+  - id: 3-1
+    cardName: H
+    rarity: 7
+  - id: 3-2
+    cardName: K
+    rarity: 8
+  - id: 3-3
+    cardName: L
+    rarity: 9
