@@ -7,16 +7,19 @@ using Random = UnityEngine.Random;
 
 public class UIOpenCardDialog : UIBaseDialog
 {
-    [SerializeField] private GameCardConfig gameCardConfig;
     [SerializeField] private float[] rarityChances = { 0.5f, 0.4f, 0.1f };
     [SerializeField] private List<ItemCardOpen> itemCardOpens;
-    List<BaseCardConfig> selectedCards = new List<BaseCardConfig>();
     
     [SerializeField] private GameObject rollButton;
     [SerializeField] private GameObject GroupCard;
 
+    private GameManager gameManager;
+    private GameCardConfig gameCardConfig;
+    
     private void OnEnable()
     {
+        gameManager = GameManager.Instance;
+        gameCardConfig = GameManager.Instance.GameCardConfig;
         SetUI(false);
     }
 
@@ -35,13 +38,12 @@ public class UIOpenCardDialog : UIBaseDialog
     
     public void GetRandomCards()
     {
-        List<BaseCardConfig> selectedCards = new List<BaseCardConfig>();
 
         for (int i = 0; i < itemCardOpens.Count; i++)
         {
             BaseCardConfig card = GetRandomCard();
-            itemCardOpens[i].SetUI(card);
-            selectedCards.Add(card);
+            itemCardOpens[i].Init(card);
+            gameManager.SaveIDCard(card.id);
         }
     }
 
