@@ -34,11 +34,9 @@ public class UICombineDialog : UIBaseDialog
     
     public void SelectCard(BaseCardConfig cardData)
     {
-        Debug.LogError("SelectCard");
         foreach (var tmpName in tmpNameComponentCards)
         {
             bool isSelectd = !String.IsNullOrEmpty(tmpName.text);
-            Debug.LogError("isSelectd: " + isSelectd);
 
             if (!isSelectd)
             {

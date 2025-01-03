@@ -25,7 +25,6 @@ public class UIOpenCardDialog : UIBaseDialog
 
     public void Roll()
     {
-        Debug.LogError("Rolling");
         GetRandomCards();
         SetUI(true);
     }
