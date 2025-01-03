@@ -38,6 +38,7 @@ public class ItemCardOpen : MonoBehaviour
     {
         if (cardConfig == null || cardConfig.rarity > imgRaritys.Count)
         {
+            Debug.LogError("Card config is null or rarity is invalid");
             return;
         }
         
@@ -54,7 +55,6 @@ public class ItemCardOpen : MonoBehaviour
         return spriteRates[index];
     }
     
-    //TODO Card Base
     public void OnClick()
     {
         onClickAction?.Invoke(cardConfig);

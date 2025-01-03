@@ -19,7 +19,7 @@ public class UIOpenCardDialog : UIBaseDialog
     private void OnEnable()
     {
         gameManager = GameManager.Instance;
-        gameCardConfig = GameManager.Instance.GameCardConfig;
+        gameCardConfig = GameManager.Instance.GameBaseCardConfig;
         SetUI(false);
     }
 
@@ -49,8 +49,8 @@ public class UIOpenCardDialog : UIBaseDialog
     private BaseCardConfig GetRandomCard()
     {
         float randomValue = Random.value;
-        int rarity = GetRarityBasedOnChance(randomValue);
-        List<BaseCardConfig> cardList = GetCardListByRarity(rarity);
+        int idType = GetTypeBasedOnChance(randomValue);
+        List<BaseCardConfig> cardList = gameCardConfig.GetCardListByType(idType);
 
         if (cardList.Count == 0)
         {
@@ -62,7 +62,7 @@ public class UIOpenCardDialog : UIBaseDialog
         return cardList[randomIndex];
     }
 
-    private int GetRarityBasedOnChance(float randomValue)
+    private int GetTypeBasedOnChance(float randomValue)
     {
         float cumulative = 0f;
         for (int i = 0; i < rarityChances.Length; i++)
@@ -73,22 +73,6 @@ public class UIOpenCardDialog : UIBaseDialog
                 return i + 1;
             }
         }
-
         return 1; // Default to common if something goes wrong
-    }
-
-    private List<BaseCardConfig> GetCardListByRarity(int rarity)
-    {
-        switch (rarity)
-        {
-            case 1:
-                return gameCardConfig.commonCards;
-            case 2:
-                return gameCardConfig.rareCards;
-            case 3:
-                return gameCardConfig.epicCards;
-            default:
-                return new List<BaseCardConfig>();
-        }
     }
 }

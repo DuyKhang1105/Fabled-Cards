@@ -11,23 +11,10 @@ public class GameCardConfig : ScriptableObject
     
     public BaseCardConfig GetCardById(string id)
     {
-        foreach (var card in commonCards)
-        {
-            if (card.id == id)
-            {
-                return card;
-            }
-        }
+        int index = int.Parse(id.Substring(0, 1));
+        List<BaseCardConfig> cards = GetCardListByType(index);
         
-        foreach (var card in rareCards)
-        {
-            if (card.id == id)
-            {
-                return card;
-            }
-        }
-        
-        foreach (var card in epicCards)
+        foreach (var card in cards)
         {
             if (card.id == id)
             {
@@ -36,5 +23,20 @@ public class GameCardConfig : ScriptableObject
         }
         
         return null;
+    }
+    
+    public List<BaseCardConfig> GetCardListByType(int type)
+    {
+        switch (type)
+        {
+            case 1:
+                return commonCards;
+            case 2:
+                return rareCards;
+            case 3:
+                return epicCards;
+            default:
+                return new List<BaseCardConfig>();
+        }
     }
 }

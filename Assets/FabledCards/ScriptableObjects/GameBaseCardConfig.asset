@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd6473ceffb852b4ab2f2fe4771745da, type: 3}
-  m_Name: GameCardConfig
+  m_Name: GameBaseCardConfig
   m_EditorClassIdentifier: 
   commonCards:
   - id: 1-1

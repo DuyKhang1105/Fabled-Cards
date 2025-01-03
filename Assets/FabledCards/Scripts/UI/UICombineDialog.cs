@@ -4,15 +4,19 @@ using System.Collections.Generic;
 using KingCyber.Base.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class UICombineDialog : UIBaseDialog
 {
     [SerializeField] private ItemCardOpen itemCardOpen;
     [SerializeField] private GameObject content;
+    [SerializeField] private TextMeshProUGUI tmpIdMixCard;
+    [SerializeField] private GameObject buttonCombine;
+    [SerializeField] private GameObject buttonReset;
+    
     [SerializeField] private List<string> saveIdCards;
-    [SerializeField] private List<TextMeshProUGUI> tmpNameComponentCards;
-    [SerializeField] private TextMeshProUGUI tmpNameMixCards;
-
+    [SerializeField] private List<ItemCardComponent> cardComponents;
 
     private void OnEnable()
     {
@@ -22,9 +26,15 @@ public class UICombineDialog : UIBaseDialog
 
     public void Init()
     {
+        CheckReset(false);
+        SpawnSaveCard();
+    }
+    
+    private void SpawnSaveCard()
+    {
         foreach (var id in saveIdCards)
         {
-            BaseCardConfig card = GameManager.Instance.GameCardConfig.GetCardById(id);
+            BaseCardConfig card = GameManager.Instance.GameBaseCardConfig.GetCardById(id);
             ItemCardOpen cardItem = Instantiate(itemCardOpen, content.transform);
             
             cardItem.Init(card);
@@ -32,15 +42,16 @@ public class UICombineDialog : UIBaseDialog
         }
     }
     
+    const int MAX_COMPONENT = 2;
     public void SelectCard(BaseCardConfig cardData)
     {
-        foreach (var tmpName in tmpNameComponentCards)
+        foreach (var component in cardComponents)
         {
-            bool isSelectd = !String.IsNullOrEmpty(tmpName.text);
+            bool isSelectd = component.IsSelected;
 
             if (!isSelectd)
             {
-                tmpName.text = cardData.cardName;
+                component.SetSelected(cardData);
                 return;
             }
         }
@@ -48,12 +59,51 @@ public class UICombineDialog : UIBaseDialog
     
     public void Combine()
     {
-        List<string> mixIds = new List<string>();
-        foreach (var tmpName in tmpNameComponentCards)
+        if (!IsSelectedAll())
         {
-            mixIds.Add(tmpName.text);
+            Debug.LogError("Please select all cards");
+            return;
         }
         
-        tmpNameMixCards.text = string.Join("_", mixIds);
+        List<string> mixIds = new List<string>();
+        foreach (var card in cardComponents)
+        {
+            mixIds.Add(card.IdCard);
+        }
+        
+        tmpIdMixCard.text = string.Join("_", mixIds);
+        CheckReset(true);
+        
+        //TODO save mix card and remove base card
+    }
+    
+    private bool IsSelectedAll()
+    {
+        foreach (var component in cardComponents)
+        {
+            if (!component.IsSelected)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void CheckReset(bool canReset)
+    {
+        buttonReset.SetActive(canReset);
+        buttonCombine.SetActive(!canReset);
+    }
+    
+    public void ResetCombine()
+    {
+        foreach (var component in cardComponents)
+        {
+            component.ResetComponent();
+        }
+        
+        tmpIdMixCard.text = "";
+        CheckReset(false);
     }
 }
