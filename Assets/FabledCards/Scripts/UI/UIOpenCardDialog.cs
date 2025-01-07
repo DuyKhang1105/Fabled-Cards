@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using KingCyber.Base.UI;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class UIOpenCardDialog : UIBaseDialog
@@ -15,6 +16,7 @@ public class UIOpenCardDialog : UIBaseDialog
 
     private GameManager gameManager;
     private GameCardConfig gameCardConfig;
+    private UnityAction onOpenPack;
     
     private void OnEnable()
     {
@@ -22,11 +24,19 @@ public class UIOpenCardDialog : UIBaseDialog
         gameCardConfig = GameManager.Instance.GameBaseCardConfig;
         SetUI(false);
     }
+    
+    public void SetData(float[] rarityChances, UnityAction onOpenPack)
+    {
+        // Set data for the dialog
+        this.rarityChances = rarityChances;
+        this.onOpenPack = onOpenPack;
+    }   
 
-    public void Roll()
+    public void OpenPack()
     {
         GetRandomCards();
         SetUI(true);
+        onOpenPack?.Invoke();
     }
 
     public void SetUI(bool isRolled)
@@ -37,7 +47,6 @@ public class UIOpenCardDialog : UIBaseDialog
     
     public void GetRandomCards()
     {
-
         for (int i = 0; i < itemCardOpens.Count; i++)
         {
             BaseCardConfig card = GetRandomCard();

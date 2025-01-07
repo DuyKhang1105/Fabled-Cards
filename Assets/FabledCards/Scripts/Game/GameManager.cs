@@ -9,9 +9,11 @@ public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private GameCardConfig gameBaseCardConfig;
     [SerializeField] private GameCardConfig gameMixCardConfig;
+    [SerializeField] private GameRateConfigs gameRateConfigs;
     
     public GameCardConfig GameBaseCardConfig => gameBaseCardConfig;
     public GameCardConfig GameMixCardConfig => gameMixCardConfig;
+    public GameRateConfigs GameRateConfigs => gameRateConfigs;
     
     
     const string SAVE_BASE_ID_CARD = "savedBaseIDCards";

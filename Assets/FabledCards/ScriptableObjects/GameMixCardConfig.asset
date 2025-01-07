@@ -14,16 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   commonCards:
   - id: 1&1-1_1-2
-    cardName: 
-    rarity: 0
-    avatar: {fileID: 0}
-  - id: 1&1-1_1-3
-    cardName: 
-    rarity: 0
-    avatar: {fileID: 0}
-  - id: 1&1-2_1-3
-    cardName: 
-    rarity: 0
-    avatar: {fileID: 0}
-  rareCards: []
-  epicCards: []
+    cardName: Dragon 1
+    rarity: 2
+  rareCards:
+  - id: 2&1-1_1-2
+    cardName: Dragon 2
+    rarity: 3
+  epicCards:
+  - id: 3&1-1_1-2
+    cardName: Dragon 3
+    rarity: 4

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -30,8 +29,10 @@ public class ItemCardOpen : MonoBehaviour
     
     public void SetUI()
     {
-        tmpName.text = cardConfig.cardName;
-        imgAvatar.sprite = cardConfig.avatar;
+        tmpName.text = cardConfig.id;
+        imgAvatar.sprite = Resources.Load<Sprite>($"Cards/{cardConfig.id}"); //cardConfig.avatar;
+        
+        imgAvatar.gameObject.SetActive(true);
     }
     
     private void SetRarity()
@@ -60,11 +61,15 @@ public class ItemCardOpen : MonoBehaviour
         onClickAction?.Invoke(cardConfig);
     }
 
-    private void ResetCard()
+    public void ResetCard()
     {
         for (int i = 0; i < imgRaritys.Count; i++)
         {
             imgRaritys[i].gameObject.SetActive(false);
         }
+        
+        tmpName.text = "";
+        imgAvatar.gameObject.SetActive(false);
+        
     }
 }

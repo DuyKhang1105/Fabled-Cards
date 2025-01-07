@@ -321,7 +321,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3779655359367381734}
         m_TargetAssemblyTypeName: UIOpenCardDialog, Assembly-CSharp
-        m_MethodName: Roll
+        m_MethodName: OpenPack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

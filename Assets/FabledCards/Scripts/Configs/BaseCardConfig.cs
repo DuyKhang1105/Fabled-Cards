@@ -7,5 +7,5 @@ public class BaseCardConfig
     public string id;
     public string cardName;
     public int rarity;
-    public Sprite avatar;
+    //public Sprite avatar;
 }

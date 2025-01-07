@@ -469,13 +469,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -697,7 +697,6 @@ GameObject:
   - component: {fileID: 976620997}
   - component: {fileID: 976620999}
   - component: {fileID: 976620998}
-  - component: {fileID: 976621000}
   m_Layer: 5
   m_Name: OpenPack
   m_TagString: Untagged
@@ -765,18 +764,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976620996}
   m_CullTransparentMesh: 1
---- !u!114 &976621000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976620996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54bb6fc63ad7aaf4e8215d988a3d4723, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1007507110
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +776,7 @@ GameObject:
   - component: {fileID: 1007507114}
   - component: {fileID: 1007507113}
   - component: {fileID: 1007507112}
+  - component: {fileID: 1007507115}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -860,9 +848,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976621000}
+      - m_Target: {fileID: 1007507115}
         m_TargetAssemblyTypeName: OpenPack, Assembly-CSharp
-        m_MethodName: Open
+        m_MethodName: ShowPack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -910,6 +898,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007507110}
   m_CullTransparentMesh: 1
+--- !u!114 &1007507115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007507110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bb6fc63ad7aaf4e8215d988a3d4723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  packCountText: {fileID: 1320058086}
+  rarityChances:
+  - 0.9
+  - 0.1
+  - 0
+  cooldownTime: 3
 --- !u!1 &1082546917
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,6 +928,7 @@ GameObject:
   - component: {fileID: 1082546921}
   - component: {fileID: 1082546920}
   - component: {fileID: 1082546919}
+  - component: {fileID: 1082546922}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -993,9 +1000,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976621000}
+      - m_Target: {fileID: 1082546922}
         m_TargetAssemblyTypeName: OpenPack, Assembly-CSharp
-        m_MethodName: Open
+        m_MethodName: ShowPack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1043,6 +1050,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082546917}
   m_CullTransparentMesh: 1
+--- !u!114 &1082546922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082546917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bb6fc63ad7aaf4e8215d988a3d4723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  packCountText: {fileID: 1441514213}
+  rarityChances:
+  - 0.2
+  - 0.3
+  - 0.5
+  cooldownTime: 10
 --- !u!1 &1163481718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,6 +1080,7 @@ GameObject:
   - component: {fileID: 1163481722}
   - component: {fileID: 1163481721}
   - component: {fileID: 1163481720}
+  - component: {fileID: 1163481723}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -1126,9 +1152,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976621000}
+      - m_Target: {fileID: 1163481723}
         m_TargetAssemblyTypeName: OpenPack, Assembly-CSharp
-        m_MethodName: Open
+        m_MethodName: ShowPack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1176,6 +1202,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163481718}
   m_CullTransparentMesh: 1
+--- !u!114 &1163481723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163481718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bb6fc63ad7aaf4e8215d988a3d4723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  packCountText: {fileID: 766861588}
+  rarityChances:
+  - 0.6
+  - 0.3
+  - 0.1
+  cooldownTime: 5
 --- !u!1 &1229605576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,13 +1379,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1883,13 +1927,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2702,7 +2746,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameBaseCardConfig: {fileID: 11400000, guid: 8a6a234b694d6ee4686739896333c360, type: 2}
-  gameMixCardConfig: {fileID: 0}
+  gameMixCardConfig: {fileID: 11400000, guid: 5bc22d4a6eeaa434682c4f13e2cf7cc7, type: 2}
+  gameRateConfigs: {fileID: 11400000, guid: 6eb8d736a192a7544b2e6f8d65c38451, type: 2}
 --- !u!82 &1970577719
 AudioSource:
   m_ObjectHideFlags: 0
