@@ -11,7 +11,6 @@ public class GameRateConfigs : ScriptableObject
     public float[] GetCombineRateConfigByScore(int score)
     {
         int index = score - 2;
-        Debug.LogError($"score: {score}, index: {index}");
         
         if (index < 0 || index >= combineRateConfigs.Count)
         {

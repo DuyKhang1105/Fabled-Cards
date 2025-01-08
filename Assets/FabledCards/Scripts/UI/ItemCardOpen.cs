@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,12 +8,21 @@ using UnityEngine.UI;
 public class ItemCardOpen : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tmpName;
+    [SerializeField] private TextMeshProUGUI tmpCount;
     [SerializeField] private Image imgAvatar;
     [SerializeField] private List<Image> imgRaritys;
     [SerializeField] private List<Sprite> spriteRates;
 
-    private UnityAction<BaseCardConfig> onClickAction;
+    private int count = 1;
+    
+    private GameManager gameManager;
     private BaseCardConfig cardConfig;
+    private UnityAction<BaseCardConfig> onClickAction;
+
+    private void OnEnable()
+    {
+        gameManager = GameManager.Instance;
+    }
 
     public void Init(BaseCardConfig card)
     {
@@ -29,6 +39,7 @@ public class ItemCardOpen : MonoBehaviour
     
     public void SetUI()
     {
+        tmpCount.text = $"{count}";
         tmpName.text = cardConfig.id;
         imgAvatar.sprite = Resources.Load<Sprite>($"Cards/{cardConfig.id}"); //cardConfig.avatar;
         
@@ -61,6 +72,23 @@ public class ItemCardOpen : MonoBehaviour
         onClickAction?.Invoke(cardConfig);
     }
 
+    public void IncreaseUICount()
+    {
+        count++;
+        tmpCount.text = $"{count}";
+    }
+    
+    public void DecreaseUICount()
+    {
+        count--;
+        tmpCount.text = $"{count}";
+        
+        if (count < 1)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+    
     public void ResetCard()
     {
         for (int i = 0; i < imgRaritys.Count; i++)
@@ -68,8 +96,8 @@ public class ItemCardOpen : MonoBehaviour
             imgRaritys[i].gameObject.SetActive(false);
         }
         
+        count = 1;
         tmpName.text = "";
         imgAvatar.gameObject.SetActive(false);
-        
     }
 }

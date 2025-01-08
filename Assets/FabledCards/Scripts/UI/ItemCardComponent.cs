@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class ItemCardComponent : MonoBehaviour
 {
-    [SerializeField] private Image cardAvatar;
-    [SerializeField] private TextMeshProUGUI cardName;
     [SerializeField] private ItemCardOpen itemCardOpen;
     
     private string idCard;
@@ -28,7 +26,6 @@ public class ItemCardComponent : MonoBehaviour
     public void SetSelected(BaseCardConfig card)
     {
         isSelected = true;
-        //itemCardOpen.Init(card);
         SetUI(card);
     }
     
@@ -40,19 +37,14 @@ public class ItemCardComponent : MonoBehaviour
     public void SetUI(BaseCardConfig card)
     {
         idCard = card.id;
-        /*cardAvatar.sprite = card.avatar;
-        cardName.text = card.cardName;
-        cardAvatar.gameObject.SetActive(true);*/
         itemCardOpen.Init(card);
     }
     
     public void ResetComponent()
     {
+        idCard = "";
         isSelected = false;
         
-        /*idCard = "";
-        cardAvatar.gameObject.SetActive(false);
-        cardName.text = "";*/
         itemCardOpen.ResetCard();
         actionReSetComponent?.Invoke();
     }

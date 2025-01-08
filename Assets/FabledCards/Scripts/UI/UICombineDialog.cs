@@ -22,10 +22,21 @@ public class UICombineDialog : UIBaseDialog
     
     [SerializeField] private List<string> saveIdCards;
     [SerializeField] private List<ItemCardComponent> cardBaseComponents;
-
+    
+    private GameManager gameManager;
+    private Dictionary<string, ItemCardOpen> spawnedCards = new Dictionary<string, ItemCardOpen>();
+    private Dictionary<string, ItemCardOpen> sellectedCards = new Dictionary<string, ItemCardOpen>();
+    
+    
     private void OnEnable()
     {
-        saveIdCards = GameManager.Instance.GetSavedIDCards();
+        gameManager = GameManager.Instance;
+        saveIdCards = gameManager.GetSavedIDCards();
+        
+    }
+
+    private void Start()
+    {
         Init();
     }
 
@@ -39,29 +50,69 @@ public class UICombineDialog : UIBaseDialog
     {
         foreach (var id in saveIdCards)
         {
-            BaseCardConfig card = GameManager.Instance.GameBaseCardConfig.GetCardById(id);
-            ItemCardOpen cardItem = Instantiate(itemCardOpen, content.transform);
+            if (spawnedCards.ContainsKey(id))
+            {
+                // Tăng số lượng của GameObject đã tồn tại
+                spawnedCards[id].IncreaseUICount();
+            }
+            else
+            {
+                // Tạo mới GameObject nếu ID chưa được sử dụng trước đó
+                BaseCardConfig card = GameManager.Instance.GameBaseCardConfig.GetCardById(id);
+                ItemCardOpen cardItem = Instantiate(itemCardOpen, content.transform);
             
-            cardItem.Init(card);
-            cardItem.SetOnClick(SelectCard);
+                cardItem.Init(card);
+                cardItem.SetOnClick(ActionSelectCardInInventory);
+
+                // Thêm GameObject vào từ điển
+                spawnedCards[id] = cardItem;
+            }
         }
     }
     
-    const int MAX_COMPONENT = 2;
-    public void SelectCard(BaseCardConfig cardData)
+    public void ActionSelectCardInInventory(BaseCardConfig cardData)
     {
         foreach (var component in cardBaseComponents)
         {
             bool isSelectd = component.IsSelected;
-
+            bool isIdAvailable = IsAvailableIdInComponent(cardData.id);
+            
+            if (isIdAvailable)
+            {
+                Debug.Log("You can't merge cards of the same type.Please select another card");
+                return;
+            }
+            
             if (!isSelectd)
             {
+                ItemCardOpen cardSelected = spawnedCards[cardData.id];
+                cardSelected.DecreaseUICount();
+                
                 component.SetSelected(cardData);
-                component.SetActionResetComponent(ShowRateCombine);
+                component.SetActionResetComponent(() => ActionResetComponent(cardSelected));
                 ShowRateCombine();
                 return;
             }
         }
+    }
+    
+    private bool IsAvailableIdInComponent(string id)
+    {
+        foreach (var component in cardBaseComponents)
+        {
+            if (component.IdCard == id)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void ActionResetComponent(ItemCardOpen cardSelected)
+    {
+        cardSelected.IncreaseUICount();
+        ShowRateCombine();
     }
     
     private void ShowRateCombine()
@@ -96,7 +147,7 @@ public class UICombineDialog : UIBaseDialog
     {
         if (!IsSelectedAll())
         {
-            Debug.LogError("Please select all cards");
+            Debug.Log("Please select all cards");
             return null;
         }
 
@@ -116,12 +167,10 @@ public class UICombineDialog : UIBaseDialog
         {
             return 0;
         }
-        Debug.LogError(baseIds.Count);
 
         int score = 0;
         foreach (var id in baseIds)
         {
-            Debug.LogError($"id: {id}");
             score += int.Parse(id.Substring(0, 1));
         }
 
@@ -133,7 +182,6 @@ public class UICombineDialog : UIBaseDialog
         //TODO update add rarity to id
         int aptitudeID = GetAptitudeOnChance();
         string rarityMixID = $"{aptitudeID}&{mixID}";
-        Debug.LogError($"rarityMixID: {rarityMixID}"); 
         //TODO show mix card
         BaseCardConfig card = GameManager.Instance.GameMixCardConfig.GetCardById(rarityMixID);
 

@@ -28,6 +28,15 @@ public class GameManager : MonoSingleton<GameManager>
         PlayerPrefs.Save();
     }
     
+    public void RemoveIDCard(string id, bool isMix = false) {
+        string key = isMix ? SAVE_MIX_ID_CARD : SAVE_BASE_ID_CARD;
+        
+        List<string> ids = GetSavedIDCards(isMix);
+        ids.Remove(id);
+        PlayerPrefs.SetString(key, string.Join(",", ids));
+        PlayerPrefs.Save();
+    }
+    
     public List<string> GetSavedIDCards(bool isMix = false) {
         string key = isMix ? SAVE_MIX_ID_CARD : SAVE_BASE_ID_CARD;
 
