@@ -11,28 +11,25 @@ using Random = UnityEngine.Random;
 
 public class UICombineDialog : UIBaseDialog
 {
-    [SerializeField] private ItemCardOpen itemCardOpen;
-    [SerializeField] private GameObject content;
     [SerializeField] private GameObject buttonCombine;
     [SerializeField] private GameObject buttonReset;
     [SerializeField] private ItemCardComponent cardMixComponent;
+    
+    [SerializeField] private Inventory inventory;
     [SerializeField] private BoardRateCombine boardRateCombine;
-
-    [SerializeField] private float[] rarityChances;
     
     [SerializeField] private List<string> saveIdCards;
     [SerializeField] private List<ItemCardComponent> cardBaseComponents;
     
-    private GameManager gameManager;
+    private float[] rarityChances;
     private Dictionary<string, ItemCardOpen> spawnedCards = new Dictionary<string, ItemCardOpen>();
-    private Dictionary<string, ItemCardOpen> sellectedCards = new Dictionary<string, ItemCardOpen>();
     
+    private GameManager gameManager;
     
     private void OnEnable()
     {
         gameManager = GameManager.Instance;
-        saveIdCards = gameManager.GetSavedIDCards();
-        
+        saveIdCards = gameManager.GetSavedIDCardsByType();
     }
 
     private void Start()
@@ -43,31 +40,8 @@ public class UICombineDialog : UIBaseDialog
     public void Init()
     {
         CheckReset(false);
-        SpawnSaveCard();
-    }
-    
-    private void SpawnSaveCard()
-    {
-        foreach (var id in saveIdCards)
-        {
-            if (spawnedCards.ContainsKey(id))
-            {
-                // Tăng số lượng của GameObject đã tồn tại
-                spawnedCards[id].IncreaseUICount();
-            }
-            else
-            {
-                // Tạo mới GameObject nếu ID chưa được sử dụng trước đó
-                BaseCardConfig card = GameManager.Instance.GameBaseCardConfig.GetCardById(id);
-                ItemCardOpen cardItem = Instantiate(itemCardOpen, content.transform);
-            
-                cardItem.Init(card);
-                cardItem.SetOnClick(ActionSelectCardInInventory);
-
-                // Thêm GameObject vào từ điển
-                spawnedCards[id] = cardItem;
-            }
-        }
+        inventory.SpawnSaveCard(saveIdCards, ActionSelectCardInInventory);
+        spawnedCards = inventory.SpawnedCards;
     }
     
     public void ActionSelectCardInInventory(BaseCardConfig cardData)

@@ -5,7 +5,7 @@ using KingCyber.Base.UI;
 using TMPro;
 using UnityEngine;
 
-public class OpenPack : MonoBehaviour
+public class PackItem : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI packCountText;
     [SerializeField] private float[] rarityChances = { 0.5f, 0.4f, 0.1f };

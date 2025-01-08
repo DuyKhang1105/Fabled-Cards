@@ -19,31 +19,38 @@ public class GameManager : MonoSingleton<GameManager>
     const string SAVE_BASE_ID_CARD = "savedBaseIDCards";
     const string SAVE_MIX_ID_CARD = "savedMixIDCards";
     
-    public void SaveIDCard(string id, bool isMix = false) {
-        string key = isMix ? SAVE_MIX_ID_CARD : SAVE_BASE_ID_CARD;
+    public void SaveIDCard(string id, bool isBaseType = true) {
+        string key = GetKeySaveIDCardByType(isBaseType);
+        List<string> ids = GetSavedIDCardsByType(isBaseType);
         
-        List<string> ids = GetSavedIDCards(isMix);
         ids.Add(id);
-        PlayerPrefs.SetString(key, string.Join(",", ids));
-        PlayerPrefs.Save();
+        SaveIdCardByKey(key, ids);
     }
     
-    public void RemoveIDCard(string id, bool isMix = false) {
-        string key = isMix ? SAVE_MIX_ID_CARD : SAVE_BASE_ID_CARD;
+    public void RemoveIDCard(string id, bool isBaseType = true) {
+        string key = GetKeySaveIDCardByType(isBaseType);
+        List<string> ids = GetSavedIDCardsByType(isBaseType);
         
-        List<string> ids = GetSavedIDCards(isMix);
         ids.Remove(id);
-        PlayerPrefs.SetString(key, string.Join(",", ids));
-        PlayerPrefs.Save();
+        SaveIdCardByKey(key, ids);
     }
     
-    public List<string> GetSavedIDCards(bool isMix = false) {
-        string key = isMix ? SAVE_MIX_ID_CARD : SAVE_BASE_ID_CARD;
-
+    public List<string> GetSavedIDCardsByType(bool isBaseType = true) {
+        string key = GetKeySaveIDCardByType(isBaseType);
         string savedIDs = PlayerPrefs.GetString(key, "");
+
         if (string.IsNullOrEmpty(savedIDs)) {
             return new List<string>();
         }
         return savedIDs.Split(',').ToList();
+    }
+    
+    private string GetKeySaveIDCardByType(bool isBaseType = true) {
+        return isBaseType ? SAVE_BASE_ID_CARD : SAVE_MIX_ID_CARD;
+    } 
+    
+    private void SaveIdCardByKey(string key, List<string> ids) {
+        PlayerPrefs.SetString(key, string.Join(",", ids));
+        PlayerPrefs.Save();
     }
 }

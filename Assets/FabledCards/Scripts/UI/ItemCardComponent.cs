@@ -47,5 +47,6 @@ public class ItemCardComponent : MonoBehaviour
         
         itemCardOpen.ResetCard();
         actionReSetComponent?.Invoke();
+        actionReSetComponent = null;
     }
 }
