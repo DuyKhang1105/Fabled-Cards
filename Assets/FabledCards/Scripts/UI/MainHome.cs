@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class MainHome : MonoBehaviour
 {
-    public void OnClickOpenPack()
+    public void OnClickOpenBattle()
     {
-        UIDialogManager.Instance.ShowDialog<UIOpenCardDialog>();
+        UIDialogManager.Instance.ShowDialog<UIBattleDialog>();
     }
     
     public void OnClickCombine()
     {
         UIDialogManager.Instance.ShowDialog<UICombineDialog>();
+    }
+    
+    [ContextMenu("Remove Card Mix Data")]
+    public void RemoveCardMixData()
+    {
+        GameManager.Instance.RemoveAllSavedIDCards(false);
     }
 }

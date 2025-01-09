@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private ItemCardOpen itemCardOpen;
+    [SerializeField] private ItemCard itemCard;
     [SerializeField] private GameObject content;
     
-    private Dictionary<string, ItemCardOpen> spawnedCards = new Dictionary<string, ItemCardOpen>();
-    public Dictionary<string, ItemCardOpen> SpawnedCards => spawnedCards; 
+    private Dictionary<string, ItemCard> spawnedCards = new Dictionary<string, ItemCard>();
+    public Dictionary<string, ItemCard> SpawnedCards => spawnedCards; 
 
-    public void SpawnSaveCard(List<string> saveIdCards, UnityAction<BaseCardConfig> actionSelectCardInInventory = null)
+    public void SpawnSaveCard(List<string> saveIdCards, GameCardConfig gameCardConfig , UnityAction<BaseCardConfig> actionSelectCardInInventory = null)
     {
         foreach (var id in saveIdCards)
         {
@@ -23,8 +24,8 @@ public class Inventory : MonoBehaviour
             else
             {
                 // Tạo mới GameObject nếu ID chưa được sử dụng trước đó
-                BaseCardConfig card = GameManager.Instance.GameBaseCardConfig.GetCardById(id);
-                ItemCardOpen cardItem = Instantiate(itemCardOpen, content.transform);
+                BaseCardConfig card = gameCardConfig.GetCardById(id);
+                ItemCard cardItem = Instantiate(itemCard, content.transform);
             
                 cardItem.Init(card);
                 cardItem.SetOnClick(actionSelectCardInInventory);

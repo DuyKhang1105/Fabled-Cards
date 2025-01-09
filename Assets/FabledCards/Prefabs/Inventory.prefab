@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85e080a0550f1642b94a89890d778d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemCardOpen: {fileID: 2516119005494091514, guid: 3ba48085cc1114041b03da172349240c, type: 3}
+  itemCard: {fileID: 2516119005494091514, guid: 3ba48085cc1114041b03da172349240c, type: 3}
   content: {fileID: 7761336449936565128}
 --- !u!114 &2247497867967840465
 MonoBehaviour:

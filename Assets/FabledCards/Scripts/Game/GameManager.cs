@@ -19,7 +19,7 @@ public class GameManager : MonoSingleton<GameManager>
     const string SAVE_BASE_ID_CARD = "savedBaseIDCards";
     const string SAVE_MIX_ID_CARD = "savedMixIDCards";
     
-    public void SaveIDCard(string id, bool isBaseType = true) {
+    public void SaveIDCard(string id, bool isBaseType) {
         string key = GetKeySaveIDCardByType(isBaseType);
         List<string> ids = GetSavedIDCardsByType(isBaseType);
         
@@ -27,7 +27,7 @@ public class GameManager : MonoSingleton<GameManager>
         SaveIdCardByKey(key, ids);
     }
     
-    public void RemoveIDCard(string id, bool isBaseType = true) {
+    public void RemoveIDCard(string id, bool isBaseType) {
         string key = GetKeySaveIDCardByType(isBaseType);
         List<string> ids = GetSavedIDCardsByType(isBaseType);
         
@@ -35,7 +35,7 @@ public class GameManager : MonoSingleton<GameManager>
         SaveIdCardByKey(key, ids);
     }
     
-    public List<string> GetSavedIDCardsByType(bool isBaseType = true) {
+    public List<string> GetSavedIDCardsByType(bool isBaseType) {
         string key = GetKeySaveIDCardByType(isBaseType);
         string savedIDs = PlayerPrefs.GetString(key, "");
 
@@ -45,12 +45,24 @@ public class GameManager : MonoSingleton<GameManager>
         return savedIDs.Split(',').ToList();
     }
     
-    private string GetKeySaveIDCardByType(bool isBaseType = true) {
+    private string GetKeySaveIDCardByType(bool isBaseType) {
         return isBaseType ? SAVE_BASE_ID_CARD : SAVE_MIX_ID_CARD;
     } 
     
     private void SaveIdCardByKey(string key, List<string> ids) {
         PlayerPrefs.SetString(key, string.Join(",", ids));
+        PlayerPrefs.Save();
+    }
+    
+    public void RemoveAllSavedIDCards(bool isBaseType) {
+        if (isBaseType)
+        {
+            PlayerPrefs.DeleteKey(SAVE_BASE_ID_CARD);
+        }
+        else
+        {
+            PlayerPrefs.DeleteKey(SAVE_MIX_ID_CARD);
+        }
         PlayerPrefs.Save();
     }
 }
